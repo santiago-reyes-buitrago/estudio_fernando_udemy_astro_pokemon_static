@@ -1,5 +1,4 @@
 ---
-import type { GetStaticPaths } from "astro";
 import type {PokemonListResponse} from "@/interfaces/pokemon-list-response.interface.ts";
 import MainLayout from "@/layouts/MainLayout.astro";
 import PokemoCard from "@/components/PokemoCard.astro";
@@ -9,9 +8,9 @@ export const getStaticPaths = async () => {
     const {results} = await resp.json() as PokemonListResponse;
     return ParamsResultPokemonMapper.ResultsPokemonToParams(results)
 }
-const {name} = Astro.params
+const {name,id} = Astro.params
+console.log(id)
 const {url} = Astro.props;
-const id = url.split('/').at(-2);
 const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`
 ---
 <MainLayout title="Algun pokemon">

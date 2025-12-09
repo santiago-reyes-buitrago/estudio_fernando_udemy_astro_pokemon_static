@@ -1,12 +1,11 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import type {PokemonListResponse} from "../interfaces/pokemon-list-response.interface";
-import PokemoCard from "../components/PokemoCard.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import type {PokemonListResponse} from "@/interfaces/pokemon-list-response.interface";
+import PokemoCard from "@/components/PokemoCard.astro";
 
 const title = 'Pokemon Static | Home';
 const resp = await fetch('https://pokeapi.co/api/v2/pokemon');
 const data = await resp.json() as PokemonListResponse;
-console.log({data})
 ---
 <MainLayout title={title}>
 	<h1 class="text-3xl text-blue-500">Listado de pokemones</h1>

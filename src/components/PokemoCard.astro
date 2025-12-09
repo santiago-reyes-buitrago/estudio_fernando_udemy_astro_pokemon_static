@@ -1,25 +1,30 @@
 ---
-import type {Result} from "../interfaces/pokemon-list-response.interface";
-import type {PokemonInfoResponseInterface} from "../interfaces/PokemonInfoResponse.interface";
+import type {Result} from "@/interfaces/pokemon-list-response.interface";
+import type {PokemonInfoResponseInterface} from "@/interfaces/PokemonInfoResponse.interface";
 interface Props extends Result {
     isBig?: boolean;
 }
-const {name,url,isBig = false} = Astro.props
+const {name, url, isBig = false} = Astro.props
 const resp = await fetch(url);
 const data = await resp.json() as PokemonInfoResponseInterface;
+// const id = data.id;
 ---
 <div class:list={[
     `card bg-primary text-primary-content w-80`,
-    isBig ? 'border-zinc-50 border-4':''
+    isBig ? 'border-zinc-50 border-4' : ''
 ]}>
     <div class="card-body">
-        <a href={`pokemons/${name}`}>
-            <h2 class=`card-title capitalize ${isBig ? 'text-3xl':''}`>{name}</h2>
+        <!--href={`pokemons/${name}`}-->
+        <!--href={`/pokemon/${id}`}-->
+        <a href={`/pokemons/${name}`}>
+            <h2 class=`card-title capitalize ${isBig ? 'text-3xl' : ''}`>{name}</h2>
             <section class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 gap-4">
-                {data.abilities.map(ability => (<li>{ability.ability.name}</li>))}
+                {data.abilities.map(ability => (
+                        <li>{ability.ability.name}</li>))}
             </section>
-            <img src={data.sprites.other["official-artwork"].front_default} class:list={[
-                isBig ? 'w-70 h-70':'w-16 h-16'
+            <img transition:name={`${name}-image`}
+                 src={data.sprites.other["official-artwork"].front_default} class:list={[
+                isBig ? 'w-70 h-70' : 'w-16 h-16'
             ]} alt={data.name}/>
         </a>
     </div>
