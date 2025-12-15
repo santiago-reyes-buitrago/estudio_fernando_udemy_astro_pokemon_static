@@ -1,0 +1,25 @@
+---
+interface Props {
+    url: string;
+    title: string;
+}
+const {url,title} = Astro.props
+const currentPath = Astro.url
+console.log(currentPath.pathname === url,url)
+---
+
+<a href={url}
+   class:list={
+       ["border-b-2 border-transparent"," hover:text-gray-800",
+           " dark:hover:text-gray-200", "hover:border-blue-500","mx-1.5 ",
+           "sm:mx-6",
+       ]
+   }>
+    {title}
+    {
+        currentPath.pathname === url && <div
+        transition:name="menu-line"
+                    class="border-b-2 border-blue-500"
+            />
+    }
+</a>
