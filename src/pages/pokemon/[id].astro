@@ -9,7 +9,6 @@ export const getStaticPaths = async () => {
     return ParamsResultPokemonMapper.ResultsPokemonToParams(results)
 }
 const {name,id} = Astro.params
-console.log(id)
 const {url} = Astro.props;
 const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`
 ---
