@@ -26,8 +26,10 @@ const {
     <title>{title}</title>
     <ClientRouter/>
 </head>
-<body class=" m-auto max-w-5xl">
+<body class="bg-slate-800 text-slate-100 flex flex-col min-h-screen">
 <Navbar/>
-<slot/>
+<main class="mt-10 mx-auto grow w-full max-w-4xl px-4">
+    <slot/>
+</main>
 </body>
 </html>

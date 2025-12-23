@@ -25,7 +25,7 @@ const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
                 <Title>{name}</Title>
             </div>
             <button id="btnFavorite" class="hover:animate-pulse" data-name={name} data-id={id}>
-                <Icon data-outline name="heart-empty" size={50} />
+                <Icon data-outline name="heart-empty" class="hidden" size={50} />
                 <Icon data-fill name="heart-full" class="hidden" size={50} />
             </button>
         </div>
@@ -47,27 +47,33 @@ const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
         name: string;
         id: number
     }
+    let favoritePokemon: FavoritePokemon[] = [];
+    const btnFavorite =  getElementHtml<HTMLButtonElement>('#btnFavorite');
+    const {name= '',id = ''} = btnFavorite.dataset
+    const heartFill = getElementHtml<HTMLElement>('[data-fill]',btnFavorite)
+    const heartEmpty =  getElementHtml<HTMLElement>('[data-outline]',btnFavorite)
+
+    const CheckFavoritePokemons = () => {
+        favoritePokemon = JSON.parse(localStorage.getItem(FAVORITE_POKEMONS) ?? '[]')
+        !favoritePokemon.some(fav => fav.name === name) ? heartEmpty.classList.toggle('hidden') : heartFill.classList.toggle('hidden')
+    }
+
+    const toogleFavorites = () => {
+        const isFavorite = favoritePokemon.some(fav => fav.name === name);
+        if (isFavorite) {
+            favoritePokemon = favoritePokemon.filter(fav => fav.name !== name);
+        }else {
+            favoritePokemon.push({
+                name,
+                id: Number(id)
+            })
+        }
+        localStorage.setItem(FAVORITE_POKEMONS,JSON.stringify(favoritePokemon))
+    }
 
     const OnPageLoad = () => {
-        let favoritePokemon: FavoritePokemon[] = JSON.parse(localStorage.getItem(FAVORITE_POKEMONS) ?? '[]')
-        const btnFavorite =  getElementHtml<HTMLButtonElement>('#btnFavorite');
+        CheckFavoritePokemons()
         if (!btnFavorite) return ;
-        const {name= '',id = ''} = btnFavorite.dataset
-        const heartFill = getElementHtml<HTMLElement>('[data-fill]',btnFavorite)
-        const heartEmpty =  getElementHtml<HTMLElement>('[data-outline]',btnFavorite)
-        const toogleFavorites = () => {
-
-            const isFavorite = favoritePokemon.some(fav => fav.name === name);
-            if (isFavorite) {
-                favoritePokemon = favoritePokemon.filter(fav => fav.name !== name);
-            }else {
-                favoritePokemon.push({
-                    name,
-                    id: Number(id)
-                })
-            }
-            localStorage.setItem(FAVORITE_POKEMONS,JSON.stringify(favoritePokemon))
-        }
         btnFavorite.addEventListener('click',() => {
             heartEmpty.classList.toggle('hidden')
             heartFill.classList.toggle('hidden')
