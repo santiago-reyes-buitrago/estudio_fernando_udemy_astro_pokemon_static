@@ -1,9 +1,16 @@
 ---
 
+import { Counter } from "@/components/Counter";
 import MainLayout from "@/layouts/MainLayout.astro";
+import {FavoritePokemons} from "@/components/FavoritePokemons.tsx";
+
+const initialValueCount = 20;
 
 ---
 
-<MainLayout>
+<MainLayout title="Favoritos">
     <h1>Favoritos</h1>
+    <!--<div style="height: 2000px; background-color: azure"></div>-->
+    <!--<Counter transition:persist="counter" transition:persist-props initialValue={initialValueCount} client:visible/>-->
+    <FavoritePokemons client:only="solid-js"/>
 </MainLayout>

@@ -3,6 +3,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import type {PokemonListResponse} from "@/interfaces/pokemon-list-response.interface";
 import PokemoCard from "@/components/PokemoCard.astro";
 import Title from "@/layouts/components/Title.astro";
+import { Counter } from "@/components/Counter";
 
 const title = 'Pokemon Static | Home';
 const resp = await fetch('https://pokeapi.co/api/v2/pokemon');
@@ -16,4 +17,5 @@ const data = await resp.json() as PokemonListResponse;
 	>
 		{data.results.map(pokemon => (<PokemoCard url={pokemon.url} name={pokemon.name}/>))}
 	</section>
+	<Counter transition:persist="counter" transition:persist-props initialValue={15} client:visible/>
 </MainLayout>
